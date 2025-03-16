@@ -56,7 +56,7 @@ export const generateStudentPDF = async ({
         const centerX = pageWidth / 2;
 
         yPos += 10;
-        ['THE RADU FRAMEWORK', 'E-TOKEN SYSTEM', schoolData.school.name, teacherData.name, `Grade ${studentData.studentInfo.grade}`]
+        ['EDUMATRIX', 'E-TOKEN SYSTEM', schoolData.school.name, teacherData.name, `Grade ${studentData.studentInfo.grade}`]
             .forEach(text => {
                 doc.text(text, centerX, yPos, { align: 'center' });
                 yPos += 8;
@@ -260,6 +260,6 @@ const addFooter = (doc, pageNumber) => {
     });
 
     doc.text(`Page ${pageNumber} of ${totalPages}`, 20, pageHeight - 10);
-    doc.text("THE RADU FRAMEWORK", pageWidth/2, pageHeight - 10, { align: 'center' });
+    doc.text("EDUMATRIX", pageWidth/2, pageHeight - 10, { align: 'center' });
     doc.text(`Created On ${dateStr}`, pageWidth - 20, pageHeight - 10, { align: 'right' });
 };

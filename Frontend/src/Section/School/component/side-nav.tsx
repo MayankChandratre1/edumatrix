@@ -82,8 +82,8 @@ export function SideNav() {
 
       {/* Desktop Navigation */}
       <nav className="hidden md:block w-64 bg-[#654f6f] text-white  shadow-lg min-h-fit h-screen">
-        <div className="p-4">
-          <img src="/logo3.png" alt="Logo" className="w-56  invert object-cover" />
+        <div className="p-4 flex justify-center items-center">
+          <img src="/edumatrixLogo.png" alt="Logo" className="w-32 object-cover" />
         </div>
         <ul className="space-y-2 py-4">
           {navItems.map((item) => (

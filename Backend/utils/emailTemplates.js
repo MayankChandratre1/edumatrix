@@ -4,8 +4,8 @@ import fs from 'fs';  // Use synchronous fs instead of promises
 
 export const getVerificationEmailTemplate = (role, otp, url, email) => {
   const description = role === Role.Teacher
-    ? "Your account has been created by your school administrator in The Radu Framework. Please verify your email address to access your teacher account and start using the E-Token system."
-    : "Your child's account has been created by the school administration in The Radu Framework. Please verify your email address to enable your child's E-Token system account and get updates.";
+    ? "Your account has been created by your school administrator in Edumatrix. Please verify your email address to access your teacher account and start using the E-Token system."
+    : "Your child's account has been created by the school administration in The Edumatrix. Please verify your email address to enable your child's E-Token system account and get updates.";
 
   // Get base64 encoded logo - using synchronous version to avoid async complexity
   let logoSrc;
@@ -30,11 +30,11 @@ export const getVerificationEmailTemplate = (role, otp, url, email) => {
     </head>
     <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; margin-bottom: 30px;">
-        <img src="${logoSrc}" alt="Radu Framework Logo" style="width: 150px; height: auto;">
+        <img src="${logoSrc}" alt="Logo" style="width: 150px; height: auto;">
       </div>
       
       <div style="background: #f9f9f9; padding: 30px; border-radius: 8px; margin-bottom: 30px;">
-        <h2 style="color: #00a58c; margin-bottom: 20px;">Welcome to The Radu Framework</h2>
+        <h2 style="color: #00a58c; margin-bottom: 20px;">Welcome to Edumatrix</h2>
         <p style="margin-bottom: 25px;">${description}</p>
         
         <div style="text-align: center; margin: 30px 0;">
@@ -52,7 +52,7 @@ export const getVerificationEmailTemplate = (role, otp, url, email) => {
       </div>
       
       <div style="text-align: center; font-size: 12px; color: #666;">
-        <p>This is an automated message from The Radu Framework.<br>
+        <p>This is an automated message from The Edumatrix.<br>
            If you believe this was sent in error, please contact your school administrator.</p>
       </div>
     </body>

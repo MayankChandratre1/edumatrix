@@ -88,7 +88,7 @@ export const generateRecieptImage = async (
     console.log(ctx.font);
 
     ctx.font = 'bold 30px "Courier New Bold"'
-    ctx.fillText(`THE RADU FRAMEWORK`, canvas.width / 2, 80);
+    ctx.fillText(`EDUMATRIX`, canvas.width / 2, 80);
     ctx.fillText(`E-TOKEN`, canvas.width / 2, 110);
     ctx.fillText(`EXCHANGE RECEIPT`, canvas.width / 2, 140);
     

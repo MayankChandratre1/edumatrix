@@ -207,7 +207,7 @@ export const sendVerifyEmail = async (req, res) => {
         for (const recipient of emailRecipients) {
             await sendEmail(
                 recipient,
-                "Verify Your Email - The Radu Framework",
+                "Verify Your Email - Edumatrix",
                 emailHTML,
                 emailHTML,
                 null

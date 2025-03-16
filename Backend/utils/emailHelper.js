@@ -132,7 +132,7 @@ export const emailGenerator = async (form, {
                 <body>
                     <div class="container">
                         <div class="header">
-                            <img src="https://vbf6zy27dq.ufs.sh/f/pcYMv9CYHjNs51BoBIgTOYRoHfL4zlTvXA8niZqxc1rsED3M" alt="Radu Logo" class="logo-left">
+                            <img src="https://vbf6zy27dq.ufs.sh/f/pcYMv9CYHjNs51BoBIgTOYRoHfL4zlTvXA8niZqxc1rsED3M" alt="Edumatrix Logo" class="logo-left">
                             <h1 class="title">Feedback Note</h1>
                             <img src="${school.logo}" alt="School Logo" class="logo-right">
                         </div>
@@ -245,7 +245,7 @@ export const reportEmailGenerator = async (attachment, attachmentName, to, stude
   let subject, body;
   console.log(student);
   
-  subject = `Radu Framework Report for ${attachmentName.replace('.pdf', '').replaceAll('_', ' ')}`
+  subject = `Edumatrix Report for ${attachmentName.replace('.pdf', '').replaceAll('_', ' ')}`
   body = `
   <p>Attached you will find the report for ${student.studentInfo.name}, ${student.studentInfo.grade} as of ${new Date().toLocaleDateString()}.</p>
   <p>Contact Info</p>

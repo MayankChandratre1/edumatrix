@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 export default function HeroSection() {
   return (
-    <section id="about" className="relative bg-[#eef1f1] text-white mt-40 h-[80vh]">
+    <section id="about" className="relative bg-[#eef1f1] text-white mt-24 h-[80vh]">
       <div className="absolute inset-0 z-0 opacity-85 h-full bg-sky-300/40">
         <img
-          src='/FRAMEWORK.gif'
+          src='/heroGif.gif'
           className='relative h-full mx-auto object-contain z-10'
         />
       </div>
@@ -18,6 +18,11 @@ export default function HeroSection() {
         relative md:bottom-1/3
         z-20
       `} >
+        <p className='mb-5'>
+          <span className="text-4xl font-bold">Welcome to Edumatrix</span>
+          <br />
+          <span className="text-2xl font-light">Streamline School Reward and Engagement</span>
+        </p>
         <Link to='/signup'>
           <Button size="lg" className="bg-green-500 hover:bg-green-600 text-white">
             Join Now
