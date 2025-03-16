@@ -18,7 +18,7 @@ export const getVerificationEmailTemplate = (role, otp, url, email) => {
   } catch (error) {
     console.error('Error loading logo:', error);
     // Fallback to a URL if available - we can add the logo to cloud storage and use the URL here
-    logoSrc = 'https://vbf6zy27dq.ufs.sh/f/pcYMv9CYHjNs51BoBIgTOYRoHfL4zlTvXA8niZqxc1rsED3M';
+    logoSrc = 'https://res.cloudinary.com/dvsl1aslo/image/upload/v1742134047/edumatrixLogo_czuwrm.png';
   }
 
   return `

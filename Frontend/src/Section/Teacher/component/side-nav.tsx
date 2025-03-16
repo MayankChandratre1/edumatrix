@@ -54,9 +54,9 @@ export function TeacherSideNav() {
     
     {
       toogle && <nav className={`w-64 bg-[#654f6f] text-black shadow-lg  ${!toogle ? "max-md:hidden":""}`}>
-      <div className="p-4">
-      <img src="/hero1.png" alt="" className='w-14  h-14' />
-      </div>
+      <div className="p-4 flex justify-center items-center">
+          <img src="/edumatrixLogo.png" alt="Logo" className="w-32 object-cover" />
+        </div>
       <ul className="space-y-2 py-4">
         {navItems.map((item) => (
           <li key={item.href}>
@@ -81,9 +81,9 @@ export function TeacherSideNav() {
     }
 
 <nav className={ `w-64 bg-[#654f6f] shadow-lg max-md:hidden`}>
-      <div className="p-4">
-      <img src="/logo3.png" alt="" className='w-56 invert object-cover' />
-      </div>
+<div className="p-4 flex justify-center items-center">
+          <img src="/edumatrixLogo.png" alt="Logo" className="w-32 object-cover scale-125" />
+        </div>
       <ul className="space-y-2 py-4">
         {navItems.map((item) => (
           <li key={item.href}>

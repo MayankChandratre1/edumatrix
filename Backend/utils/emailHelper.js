@@ -132,7 +132,7 @@ export const emailGenerator = async (form, {
                 <body>
                     <div class="container">
                         <div class="header">
-                            <img src="https://vbf6zy27dq.ufs.sh/f/pcYMv9CYHjNs51BoBIgTOYRoHfL4zlTvXA8niZqxc1rsED3M" alt="Edumatrix Logo" class="logo-left">
+                            <img src="https://res.cloudinary.com/dvsl1aslo/image/upload/v1742134047/edumatrixLogo_czuwrm.png" alt="Edumatrix Logo" class="logo-left">
                             <h1 class="title">Feedback Note</h1>
                             <img src="${school.logo}" alt="School Logo" class="logo-right">
                         </div>

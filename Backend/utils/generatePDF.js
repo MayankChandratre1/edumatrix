@@ -32,11 +32,11 @@ export const generateStudentPDF = async ({
         let yPos = margin;
 
         // Fixed Radu Framework logo (make sure this URL is accessible)
-        const raduLogoUrl = 'https://vbf6zy27dq.ufs.sh/f/pcYMv9CYHjNs51BoBIgTOYRoHfL4zlTvXA8niZqxc1rsED3M';
+        const raduLogoUrl = 'https://res.cloudinary.com/dvsl1aslo/image/upload/v1742134047/edumatrixLogo_czuwrm.png';
         try {
             const raduLogoBase64 = await getImageAsBase64(raduLogoUrl);
             if (raduLogoBase64) {
-                doc.addImage(`data:image/png;base64,${raduLogoBase64}`, 'PNG', margin, yPos-15, 40, 60);
+                doc.addImage(`data:image/png;base64,${raduLogoBase64}`, 'PNG', margin, yPos-15, 60, 60);
             }
         } catch (error) {
             console.error('Error loading Radu logo:', error);

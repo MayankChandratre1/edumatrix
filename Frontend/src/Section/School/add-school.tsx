@@ -216,104 +216,179 @@ if (!response.error) {
 
   if (school) {
     return (
-      <div className="grid  place-items-center">
-        <div className="space-y-4">
-          <div className="flex flex-col gap-4 items-center space-x-4">
-            <img
-              src={school.logo || "/default-logo.png"}
-              alt={school.name}
-              className="w-36 h-36 object-cover rounded-full"
-            />
-            
-            <div className="text-center">
-              <p className="text-xl">{school.district}</p>
-              <h2 className="text-4xl font-bold">{school.name}</h2>
-              <p className="text-xl">{school.createdBy.name?.toUpperCase()} - LEAD TEACHER</p>
-              <p className="text-xl">{school.address}</p>
-              <p className="text-xl">{school.state}, {school.country}</p>
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-white rounded-lg p-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-1 items-start">
+            {/* School Logo Section */}
+            <div className="flex flex-col items-center space-y-4">
+              <img
+                src={school.logo || "/default-logo.png"}
+                alt={school.name}
+                className="w-64 h-64 object-cover rounded-lg shadow-lg"
+              />
+              <div className="flex items-center gap-4 mt-6">
+                <Button 
+                  variant={"outline"} 
+                  className="bg-[#00a58c] hover:bg-[#00a58c]/90 text-white" 
+                  onClick={() => setIsEditing(!isEditing)}
+                >
+                  {isEditing ? "Cancel" : "Edit School"}
+                </Button>
+                <Button 
+                  variant={"outline"} 
+                  className="bg-red-500 hover:bg-red-700 text-white hover:text-white" 
+                  onClick={() => setShowResetModal(true)}
+                >
+                  Reset Students
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <Button variant={"outline"} className="bg-[#00a58c] hover:bg-[#00a58c] text-white" onClick={() => setIsEditing(!isEditing)}>
-                {isEditing ? "Cancel":"Edit School"}
-              </Button>
 
-              <Button variant={"outline"} className="bg-red-500 hover:bg-red-700 text-white hover:text-white" onClick={()=>
-                setShowResetModal(true)
-              }>
-               Reset Students
-              </Button>
+            {/* School Info Section */}
+            <div className="flex flex-col space-y-4">
+              <div className="border-b pb-4">
+                <h2 className="text-4xl font-bold text-gray-800 mb-2">{school.name}</h2>
+                <p className="text-xl text-[#00a58c] font-semibold">{school.district}</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xl font-medium text-gray-700">
+                  Lead Teacher: <span className="text-gray-600">{school.createdBy.name?.toUpperCase()}</span>
+                </p>
+                <div className="text-lg text-gray-600">
+                  <p className="flex items-center gap-2">
+                    <span className="material-icons">location_on</span>
+                    {school.address}
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span className="material-icons">public</span>
+                    {school.state}, {school.country}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        { 
-          !isEditing && <SchoolStats stats={stats} />
-        }
-        {
-          !isEditing && <AllCharts />
-        }
-       
-        
+
+        {!isEditing && (
+          <div className="mt-8 space-y-8">
+            <SchoolStats stats={stats} />
+            <AllCharts />
+          </div>
+        )}
+
+        {/* Rest of the editing form */}
         {isEditing && (
-          <div className="grid place-items-center w-full h-full mt-20">
-            <div className="bg-white shadow-xl p-4 rounded-lg">
-              <h1 className="text-3xl font-bold mb-6">
-                {isEditing ? "Edit School" : "Add School"}
-              </h1>
-              <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
-                <div>
-                  <Label htmlFor="schoolName">School Name</Label>
+          <div className="w-full mt-8">
+            <div className="bg-white shadow-xl p-8 rounded-lg max-w-3xl mx-auto">
+              <div className="border-b pb-4 mb-6">
+                <h1 className="text-3xl font-bold text-gray-800">
+                  Edit School Information
+                </h1>
+                <p className="text-gray-600 mt-2">Update your school's details below</p>
+              </div>
+              
+              <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6">
+                <div className="col-span-2">
+                  <Label htmlFor="schoolName" className="text-gray-700 font-medium">School Name</Label>
                   <Input
                     id="schoolName"
                     value={schoolName}
                     onChange={(e) => setSchoolName(e.target.value)}
+                    className="mt-1 w-full"
                     required
                   />
                   {errors.schoolName && (
                     <p className="text-red-500 text-sm mt-1">{errors.schoolName}</p>
                   )}
                 </div>
-                <div>
-                  <Label htmlFor="address">Address</Label>
-                  <Input
-                    id="address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                  />
-                  {errors.address && (
-                    <p className="text-red-500 text-sm mt-1">{errors.address}</p>
-                  )}
-                </div>
-                <div>
-                  <Label htmlFor="district">District</Label>
+
+                <div className="col-span-2">
+                  <Label htmlFor="district" className="text-gray-700 font-medium">District</Label>
                   <Input
                     id="district"
                     value={district}
                     onChange={(e) => setDistrict(e.target.value)}
+                    className="mt-1 w-full"
                     required
                   />
                   {errors.district && (
                     <p className="text-red-500 text-sm mt-1">{errors.district}</p>
                   )}
                 </div>
-                {formFields}
-                {isEditing && (
-                  <div>
-                    <Label htmlFor="logo">Logo</Label>
-                    <Input
-                      id="logo"
-                      type="file"
-                      onChange={(e) => setLogo(e.target.files?.[0] || null)}
-                      accept="image/*"
-                    />
-                    {errors.logo && (
-                      <p className="text-red-500 text-sm mt-1">{errors.logo}</p>
-                    )}
-                  </div>
-                )}
-                <Button type="submit" className="bg-[#00a58c] hover:bg-[#00a58c]">
-                  {isEditing ? "Update School" : "Add School"}
-                </Button>
+
+                <div className="col-span-2">
+                  <Label htmlFor="address" className="text-gray-700 font-medium">Address</Label>
+                  <Input
+                    id="address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="mt-1 w-full"
+                    required
+                  />
+                  {errors.address && (
+                    <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="state" className="text-gray-700 font-medium">State</Label>
+                  <Select
+                    value={state}
+                    onValueChange={setState}
+                  >
+                    <SelectTrigger className="w-full mt-1">
+                      <SelectValue placeholder="Select state" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {STATE_OPTIONS.map((stateOption) => (
+                        <SelectItem key={stateOption} value={stateOption}>
+                          {stateOption}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="country" className="text-gray-700 font-medium">Country</Label>
+                  <Input
+                    id="country"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className="mt-1 w-full"
+                    required
+                  />
+                </div>
+
+                <div className="col-span-2">
+                  <Label htmlFor="logo" className="text-gray-700 font-medium">School Logo</Label>
+                  <Input
+                    id="logo"
+                    type="file"
+                    onChange={(e) => setLogo(e.target.files?.[0] || null)}
+                    accept="image/*"
+                    className="mt-1 w-full"
+                  />
+                  {errors.logo && (
+                    <p className="text-red-500 text-sm mt-1">{errors.logo}</p>
+                  )}
+                </div>
+
+                <div className="col-span-2 flex justify-end gap-4 mt-6 pt-6 border-t">
+                  <Button 
+                    type="button" 
+                    variant="outline"
+                    onClick={() => setIsEditing(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    className="bg-[#00a58c] hover:bg-[#00a58c]/90 text-white"
+                  >
+                    Update School
+                  </Button>
+                </div>
               </form>
             </div>
           </div>

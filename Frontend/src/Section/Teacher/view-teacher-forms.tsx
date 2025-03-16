@@ -52,34 +52,47 @@ export default function ViewTeacherForms() {
     }
   }
 
+  const FormCard = ({ form }: { form: Form }) => (
+    <Card className="flex flex-col h-full transform transition-all duration-200 hover:scale-[1.02] bg-white border shadow-md hover:shadow-xl">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
+        <div className="space-y-1">
+          <CardTitle className="text-xl font-semibold line-clamp-1">{form.formName}</CardTitle>
+          <CardDescription className="text-sm font-medium text-[#00a58c]">
+            {form.formType}
+          </CardDescription>
+        </div>
+        <div className='p-2 bg-gray-50 rounded-full'>{getFormTypeIcon(form.formType)}</div>
+      </CardHeader>
+      <CardContent className="flex-1 pt-4">
+        <div className="flex items-center text-sm text-gray-600">
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          <span>{new Date(form.createdAt).toLocaleDateString()}</span>
+        </div>
+        <Button
+          className="w-full mt-4 bg-[#00a58c] hover:bg-[#00a58c]/90 text-white"
+          onClick={() => navigate(`/teachers/submitform/${form._id}`)}
+        >
+          Use Form
+        </Button>
+      </CardContent>
+    </Card>
+  )
+
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Forms</h1>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="space-y-8">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-800">Forms</h1>
+          <p className="text-gray-600 mt-1">View and use available forms</p>
+        </div>
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {forms.map((form) => (
-          <Card key={form._id} className="cursor-pointer hover:shadow-lg transition-shadow bg-[#97d8b2] hover:bg-[#97d8b2]">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-2xl font-medium text-black">{form.formName}</CardTitle>
-              {getFormTypeIcon(form.formType)}
-            </CardHeader>
-            <CardContent>
-              <CardDescription className='text-black'>{form.formType}</CardDescription>
-              <div className="flex items-center pt-4">
-                <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
-                <span className="text-xs text-muted-foreground text-black">
-                  {new Date(form.createdAt).toLocaleDateString()}
-                </span>
-              </div>
-              <Button
-                className="mt-4 w-full bg-[#ffcdd3] hover:bg-[#ffcdd3] text-black"
-                onClick={() => navigate(`/teachers/submitform/${form._id}`)}
-              >
-                Use Form
-              </Button>
-            </CardContent>
-          </Card>
+          <FormCard key={form._id} form={form} />
         ))}
       </div>
+
       {selectedForm && (
         <FormDetails form={selectedForm} onClose={() => setSelectedForm(null)} />
       )}

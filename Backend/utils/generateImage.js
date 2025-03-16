@@ -25,35 +25,52 @@ export const generateCouponImage = async (
 ) => {
   try {
     loadFontFromURL(path.join(__dirname, '../fonts/courbd.ttf'),'Courier New Bold')
-    const backgroundImage = await loadImage(path.join(__dirname, './school_token.png'));
-    console.log(backgroundImage);
-    
+    const backgroundImage = await loadImage(path.join(__dirname, './school_token2.png'));
     const schoolLogo = await loadImage(schoolLogoURL);
-    console.log(schoolLogo);
     
     const canvas = createCanvas(690, 400)
     const ctx = canvas.getContext('2d')
 
-    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    // Draw background with 10px margins on sides and 20px on top/bottom
+    ctx.drawImage(backgroundImage, 10, 20, 670, 360);
     
-    
-    ctx.font = 'bold 15px "Courier New Bold"';
-    ctx.fillStyle = 'black';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    console.log(ctx.font);
+    ctx.fillStyle = 'black';
     
-    ctx.fillText(`VALID ONLY AT ${schoolName.toUpperCase()} STORE`, canvas.width / 2, 40);
-    ctx.font = 'bold 20px "Courier New Bold"'
-    ctx.fillText(`Awarded to: ${student.toUpperCase()}`, canvas.width / 2, 150);
-    ctx.font = 'bold 45px "Courier New Bold"'
-    ctx.fillText(`${noOfTokens} E-TOKENS`, canvas.width / 2, 180);
-    ctx.drawImage(schoolLogo, canvas.width/2 - 30, 200, 60, 60);
-    ctx.font = 'bold 20px "Courier New Bold"'
-    ctx.fillText(`EARNED AT THE ${subject.toUpperCase()} CLASS`, canvas.width / 2, 270);
+    // Header (y: 45)
+    ctx.font = 'bold 18px "Courier New Bold"';
+    ctx.fillText(`VALID ONLY AT ${schoolName.toUpperCase()} STORE`, canvas.width / 2, 60);
+
+
+    // Student Name (y: 100)
+    ctx.font = 'bold 22px "Courier New Bold"';
+    ctx.fillText(`Awarded to: ${student.toUpperCase()}`, canvas.width / 2, 100);
+
+    // Token Amount (y: 155)
+    ctx.font = 'bold 48px "Courier New Bold"';
+    ctx.fillText(`${noOfTokens} E-TOKENS`, canvas.width / 2, 145);
+
+    // School Logo (centered vertically, y: 190-250)
+    const logoSize = 60;
+    ctx.drawImage(
+      schoolLogo, 
+      canvas.width/2 - logoSize/2,
+      180,
+      logoSize,
+      logoSize
+    );
+
+    // Award Details (starting y: 280)
+    ctx.font = 'bold 20px "Courier New Bold"';
+    ctx.fillText(`EARNED IN ${subject.toUpperCase()} CLASS`, canvas.width / 2, 270);
+    ctx.font = 'bold 18px "Courier New Bold"';
     ctx.fillText(`ON ${date}`, canvas.width / 2, 290);
-    ctx.fillText(`AWARDED BY TEACHER: ${teacher}`, canvas.width / 2, 310);
-    ctx.fillText(`cc: ${parentEmail}`, canvas.width / 2, 350);
+
+    // Footer Information (y: 360)
+    ctx.font = 'bold 16px "Courier New Bold"';
+    ctx.fillText(`AWARDED BY: ${teacher}`, canvas.width / 2, 315);
+    ctx.fillText(`CC: ${parentEmail}`, canvas.width / 2, 342);
 
     return canvas.toBuffer();
   } catch (error) {

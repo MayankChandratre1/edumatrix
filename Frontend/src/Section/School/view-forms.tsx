@@ -144,46 +144,52 @@ export default function ViewForms() {
   }
 
   const FormCard = ({ form }: { form: Form }) => (
-    <Card key={form._id} className="cursor-pointer hover:shadow-lg transition-shadow bg-[#97d8b2] hover:bg-[#97d8b2]">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-2xl font-medium text-black">{form.formName}</CardTitle>
-        <div className='p-1 rounded-md'>{getFormTypeIcon(form.formType)}</div>
+    <Card className="flex flex-col h-full transform transition-all duration-200 hover:scale-[1.02] bg-white border shadow-md hover:shadow-xl">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
+        <div className="space-y-1">
+          <CardTitle className="text-xl font-semibold line-clamp-1">{form.formName}</CardTitle>
+          <CardDescription className="text-sm font-medium text-[#00a58c]">
+            {form.formType}
+          </CardDescription>
+        </div>
+        <div className='p-2 bg-gray-50 rounded-full'>{getFormTypeIcon(form.formType)}</div>
       </CardHeader>
-      <CardContent>
-        <CardDescription className='text-black'>{form.formType}</CardDescription>
-        <div className="flex items-center pt-2 text-xs text-muted-foreground text-black">
+      <CardContent className="flex-1 pt-4">
+        <div className="flex items-center text-sm text-gray-600">
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          <span>{new Date(form.createdAt).toLocaleDateString()}</span>
+        </div>
+        <div className="mt-2 text-sm font-medium">
           Total Points: {calculateTotalPoints(form.questions)}
         </div>
-        <div className="flex items-center pt-4">
-          <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
-          <span className="text-xs text-muted-foreground text-black">
-            {new Date(form.createdAt).toLocaleDateString()}
-          </span>
-        </div>
-        <div className='flex items-center mt-4 gap-2'>
+        <div className="grid grid-cols-2 gap-2 mt-4">
           <Button
-            className="flex-1 bg-[#ffcdd3] hover:bg-[#ffcdd3] text-black hover:text-black"
+            className="bg-[#00a58c]/10 hover:bg-[#00a58c]/20 text-[#00a58c]"
             onClick={() => setSelectedForm(form)}
           >
             View Details
           </Button>
           <Button
-            className="flex-1 bg-[#ffcdd3] hover:bg-[#ffcdd3] text-black hover:text-black"
+            className="bg-[#00a58c] hover:bg-[#00a58c]/90 text-white"
             onClick={() => navigate(`/schoolAdmin/submitform/${form._id}`)}
           >
-            Use form
+            Use Form
           </Button>
+        </div>
+        <div className="flex gap-2 mt-2">
           <Button
-            className="bg-[#5c95ff] hover:bg-[#5c95ff]"
+            className="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600"
             onClick={() => navigate(`/editform/${form._id}`)}
           >
-            <Edit2Icon />
+            <Edit2Icon className="h-4 w-4" />
+            <span className="ml-2">Edit</span>
           </Button>
           <Button
-            className="bg-[#c7b8da] hover:bg-[#c7b8da]"
+            className="flex-1 bg-red-50 hover:bg-red-100 text-red-600"
             onClick={() => openDeleteModal(form)}
           >
-            <Trash2Icon />
+            <Trash2Icon className="h-4 w-4" />
+            <span className="ml-2">Delete</span>
           </Button>
         </div>
       </CardContent>
@@ -191,22 +197,25 @@ export default function ViewForms() {
   )
 
   return (
-    <div className="container mx-auto p-4">
-      <div className='flex justify-between mb-6'>
-        <h1 className="text-2xl font-bold">Forms</h1>
+    <div className="space-y-8">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-800">Forms</h1>
+          <p className="text-gray-600 mt-1">Manage and create forms for your school</p>
+        </div>
         <Button 
-          className='bg-[#00a58c] hover:bg-[#00a58c]' 
+          className="bg-[#00a58c] hover:bg-[#00a58c]/90"
           onClick={() => navigate('/createform')}
         >
-          Create Form
+          Create New Form
         </Button>
       </div>
 
       {/* Special Forms Section */}
       {groupedForms.special.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Special Forms</h2>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div>
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">Special Forms</h2>
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {groupedForms.special.map((form) => (
               <FormCard key={form._id} form={form} />
             ))}
@@ -217,9 +226,9 @@ export default function ViewForms() {
       {/* Grade-wise Forms Sections */}
       {Object.entries(groupedForms.byGrade).map(([grade, gradeForms]) => (
         gradeForms.length > 0 && (
-          <div key={grade} className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Grade {grade} Forms</h2>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div key={grade}>
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Grade {grade} Forms</h2>
+            <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {gradeForms.map((form) => (
                 <FormCard key={form._id} form={form} />
               ))}
@@ -227,6 +236,8 @@ export default function ViewForms() {
           </div>
         )
       ))}
+
+      {/* Modals */}
       {deleteModal.open && deleteModal.form && (
         <FormDeleteModal form={deleteModal.form} onClose={closeDeleteModal} remove={removeForm} />
       )}
@@ -237,35 +248,32 @@ export default function ViewForms() {
   )
 }
 
-
-const FormDeleteModal = ({ form, onClose, remove }: { form: Form, onClose: () => void, remove: (id:string) => Promise<any> }) => {
-
-
-  
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-4 rounded-md w-72">
-        <h2 className="text-xl font-semibold mb-4">Delete Form</h2>
-        <p>Are you sure you want to delete form <span className="font-semibold">{form.formName}</span>?</p>
-        <div className="flex justify-end mt-4">
-          <Button
-            variant="ghost"
-            className="mr-4"
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => {
-              remove(form._id)
-              onClose()
-            }}
-          >
-            Delete
-          </Button>
-        </div>
+// Update FormDeleteModal with better styling
+const FormDeleteModal = ({ form, onClose, remove }: { form: Form, onClose: () => void, remove: (id:string) => Promise<any> }) => (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md mx-4">
+      <h2 className="text-xl font-semibold text-gray-800">Delete Form</h2>
+      <p className="mt-2 text-gray-600">
+        Are you sure you want to delete <span className="font-semibold text-gray-800">{form.formName}</span>?
+        This action cannot be undone.
+      </p>
+      <div className="flex justify-end gap-3 mt-6">
+        <Button
+          variant="outline"
+          onClick={onClose}
+        >
+          Cancel
+        </Button>
+        <Button
+          className="bg-red-500 hover:bg-red-600 text-white"
+          onClick={() => {
+            remove(form._id)
+            onClose()
+          }}
+        >
+          Delete Form
+        </Button>
       </div>
     </div>
-  )
-}
+  </div>
+)
